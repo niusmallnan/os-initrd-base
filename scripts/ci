@@ -3,15 +3,16 @@ set -e
 
 cd $(dirname $0)/..
 
+if [ -z "$PLATFORM" ]; then
+    PLATFORM="amd64"
+fi
+
 : ${CONFIG:=$(pwd)/config}
 : ${DIST:=$(pwd)/dist}
-: ${ARCH:='amd64 arm64'}
 
 echo "about to build ${ARCH}"
 
 mkdir -p ${DIST}/artifacts
 
-for arch in $ARCH; do
-  ./scripts/build-busybox "build" ${CONFIG}/${arch}/buildroot-config-static ${CONFIG}/busybox-dynamic.config
-  ./scripts/package ${arch}
-done
+./scripts/build-busybox "build" ${CONFIG}/${PLATFORM}/buildroot-config-static ${CONFIG}/busybox-dynamic.config
+./scripts/package ${PLATFORM}

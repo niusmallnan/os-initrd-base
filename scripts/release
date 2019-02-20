@@ -4,7 +4,7 @@ cd $(dirname $0)/..
 : ${ARTIFACTS:=$(pwd)/dist/artifacts}
 
 ./scripts/ci 2>&1 | tee build.log
-mv build.log dist/build_${ARCH}.log
+mv build.log dist/build_${PLATFORM}.log
 
 GIT_TAG=$(git tag -l --contains HEAD | head -n 1)
 if [ -n "$(git status --porcelain --untracked-files=no)" ]; then
@@ -24,6 +24,6 @@ echo
 echo "to publish release to github, run dist/publish.sh"
 
 echo "#!/bin/sh"> dist/publish.sh
-echo "hub release edit -m ${VERSION} -a ./dist/artifacts/os-initrd-base-${ARCH}.tar.gz ${VERSION}" >> dist/publish.sh
+echo "hub release edit -m ${VERSION} -a ./dist/artifacts/os-initrd-base-${PLATFORM}.tar.gz ${VERSION}" >> dist/publish.sh
 
 chmod 755 dist/publish.sh

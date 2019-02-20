@@ -13,6 +13,15 @@ $(TARGETS): .dapper
 shell-bind: .dapper
 	./.dapper -m bind -s
 
+amd64: .dapper
+	PLATFORM=amd64 ./.dapper release
+
+arm64: .dapper
+	PLATFORM=arm64 ./.dapper release
+
+rpi64: .dapper
+	PLATFORM=rpi64 ./.dapper release
+
 clean:
 	@./scripts/clean
 
